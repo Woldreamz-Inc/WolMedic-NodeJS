@@ -7,7 +7,11 @@ const User = sequelize.define("User", {
     autoIncrement: true,
     primaryKey: true,
   },
-  name: {
+  firstname: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  lastname: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -15,6 +19,30 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
+  },
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  dob: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  isVerified: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  role: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: "user",
+    validate: {
+      isIn: [["user", "admin", "super"]],
+    },
   },
 });
 

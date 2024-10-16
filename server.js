@@ -1,37 +1,33 @@
-// Import required modules
 const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const sequelize = require("./config/db.config"); // Sequelize configuration
 const userRoutes = require("./routes/user.routes"); // User routes
+const authRoutes = require("./routes/auth.routes"); // Auth routes
+const setupSwagger = require("./config/swagger"); // Adjust the path as needed
 
-// Load environment variables from .env file
 dotenv.config();
 
-// Initialize Express app
 const app = express();
-
-// Set the port number from environment variables or use 5000 as a default
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(bodyParser.json()); // Parse incoming JSON requests
+app.use(bodyParser.json());
 
-// Test route to ensure the server is running
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-// Mount user routes
 app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
-// Sync database and start the server
+// Setup Swagger
+setupSwagger(app);
+
 sequelize
   .sync()
   .then(() => {
     console.log("Database connected and synced successfully");
 
-    // Start the server
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
