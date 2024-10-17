@@ -6,9 +6,9 @@ const swaggerOptions = {
   swaggerDefinition: {
     openapi: "3.0.0",
     info: {
-      title: "Wol Care",
+      title: "MedEquip Pro",
       version: "1.0.0",
-      description: "API documentation for wol-care.",
+      description: "Official API documentation for MedEquip Pro",
     },
     servers: [
       {
