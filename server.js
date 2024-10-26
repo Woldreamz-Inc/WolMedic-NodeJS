@@ -13,11 +13,7 @@ const app = express();
 const cors = require("cors");
 const PORT = process.env.PORT || 5000;
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-  })
-);
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,7 +29,7 @@ app.use("/api/equipment", equipmentRoutes);
 // Setup Swagger
 setupSwagger(app);
 
-sequelize
+/* sequelize
   .sync()
   .then(() => {
     console.log("Database connected and synced successfully");
@@ -44,4 +40,6 @@ sequelize
   })
   .catch((err) => {
     console.error("Unable to connect to the database:", err);
-  });
+  }); */
+
+module.exports = app;
