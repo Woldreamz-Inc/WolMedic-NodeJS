@@ -70,6 +70,7 @@ exports.verifyEmail = async (req, res) => {
 // Login logic
 exports.login = async (req, res) => {
   const { email, password } = req.body;
+  // console.log("Login", email);
   try {
     const user = await User.findOne({ where: { email } });
 
