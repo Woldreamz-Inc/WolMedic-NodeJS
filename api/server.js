@@ -1,11 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
-const sequelize = require("./config/db.config"); // Sequelize configuration
-const userRoutes = require("./routes/user.routes"); // User routes
-const authRoutes = require("./routes/auth.routes"); // Auth routes
-const equipmentRoutes = require("./routes/equipment.routes");
-const setupSwagger = require("./config/swagger"); // Adjust the path as needed
+const sequelize = require("../config/db.config"); // Sequelize configuration
+const userRoutes = require("../routes/user.routes"); // User routes
+const authRoutes = require("../routes/auth.routes"); // Auth routes
+const equipmentRoutes = require("../routes/equipment.routes");
+const setupSwagger = require("../config/swagger"); // Adjust the path as needed
 
 dotenv.config();
 
@@ -17,9 +17,10 @@ app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+setupSwagger(app);
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.send("API documentation for MedEquip Pro.");
 });
 
 app.use("/api/users", userRoutes);
@@ -27,7 +28,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/equipment", equipmentRoutes);
 
 // Setup Swagger
-setupSwagger(app);
 
 sequelize
   .sync()
@@ -41,3 +41,5 @@ sequelize
   .catch((err) => {
     console.error("Unable to connect to the database:", err);
   });
+
+module.exports = app;
