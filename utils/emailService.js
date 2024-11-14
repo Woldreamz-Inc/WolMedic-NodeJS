@@ -11,10 +11,10 @@ const transporter = nodemailer.createTransport({
 
 // Send Verification Email
 exports.sendVerificationEmail = async (email, token) => {
-  const verificationLink = `https://medequip-api.vercel.app/api/auth/verify/${token}`; 
+  const verificationLink = `https://localhost:3000/2FA/${token}`; 
 
   await transporter.sendMail({
-    from: process.env.EMAIL_USER,
+    from: process.env.EMAIL_USER,    
     to: email,
     subject: "Account Verification",
     html: `<p>Click the link below to verify your account:</p><a href="${verificationLink}">Verify Account ${verificationLink}</a>`,
