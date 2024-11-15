@@ -29,6 +29,7 @@ async function uploadImages(files) {
     const storageRef = ref(storage, `equipment/${file.originalname}`);
     await uploadBytes(storageRef, file.buffer);
     const url = await getDownloadURL(storageRef);
+    console.log(url);
     urls.push(url);
   }
 
