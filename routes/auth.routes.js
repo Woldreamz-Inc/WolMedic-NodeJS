@@ -197,4 +197,38 @@ router.post("/reset-password", authController.resetPassword);
  */
 router.post("/resend-verification", authController.resendVerificationEmail);
 
+/**
+ * @swagger
+ * /auth/update:
+ *   put:
+ *     summary: Updates an existing user
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               firstname:
+ *                 type: string
+ *               lastname:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               phone:
+ *                 type: string
+ *               dob:
+ *                 type: string
+ *                 format: date
+ *     responses:
+ *       200:
+ *         description: profile updated
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal server error
+ */
+router.put("/update", authController.editProfile)
+
 module.exports = router;

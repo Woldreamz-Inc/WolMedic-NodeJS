@@ -5,6 +5,7 @@ const {
   sendVerificationEmail,
   sendPasswordResetEmail,
 } = require("../utils/emailService");
+const SavedEquipment = require("../models/savedequipment.model");
 
 // Signup logic
 exports.signup = async (req, res) => {
@@ -29,6 +30,12 @@ exports.signup = async (req, res) => {
       dob,
       role: "user",
     });
+
+    // Generate SavedEquipment
+    await SavedEquipment.create({
+      userId: user.id,
+      equipmentId: []
+    })
 
     // Generate a verification token
     const verificationToken = jwt.sign(
@@ -208,3 +215,26 @@ exports.resendVerificationEmail = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error", error });
   }
 };
+
+exports.editProfile = async (req, res) => {
+  const { firstname, lastname, email, phone, dob } = req.body;
+  try {
+    const user = User.findOne({
+      where: {
+        userId: req.user.id
+      }
+    });
+
+    user.firstname = firstname || user.firstname
+    user.lastname = lastname || user.lastname
+    user.email = email || user.email
+    user.phone = phone || user.phone
+    user.dob = dob || user.dob
+
+    await user.save();
+
+    res.status(200).json({message: "profie updated!", user});
+  } catch (err) {
+    res.status(500).json({error: err.message});
+  }
+}

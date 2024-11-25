@@ -48,3 +48,4 @@ const Equipment = sequelize.define("Equipment", {
 Equipment.belongsTo(User, { foreignKey: "userId" });
 
 module.exports = Equipment;
+
