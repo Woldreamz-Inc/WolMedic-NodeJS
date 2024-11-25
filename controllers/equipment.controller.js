@@ -107,13 +107,11 @@ exports.deleteEquipment = async (req, res) => {
 };
 
 exports.createSavedEquipment = async (req, res) => {
-  const { equipmentId } = req.body;
   const userId = req.user.id;
 
   try {
     const savedequipment = await SavedEquipment.upsert({
-      userId: userId,
-      equipmentId: [equipmentId]
+      userId: userId
     })
 
     res.status(201).json(savedequipment);
