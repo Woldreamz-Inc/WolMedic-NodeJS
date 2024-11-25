@@ -8,7 +8,7 @@ const { uploadImages } = require("../utils/firebaseService"); // Make sure to im
 
 // Create Equipment
 exports.createEquipment = async (req, res) => {
-  const { name, description, category, tags, useCases } = req.body;
+  const { name, description, category, tags, useCases, specification } = req.body;
   const userId = req.user.id; // Extract userId from the authenticated user
 
   try {
@@ -19,6 +19,7 @@ exports.createEquipment = async (req, res) => {
       name,
       description,
       category,
+      specification,
       images: imageUrls,
       tags,
       useCases,
