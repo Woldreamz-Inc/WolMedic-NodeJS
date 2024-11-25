@@ -121,6 +121,18 @@ exports.createSavedEquipment = async (req, res) => {
   }
 };
 
+exports.getPopularEquipments = async (req, res) => {
+  try {
+    const equipments = await Post.findAll({
+      order: sequelize.literal('max(popularity) DESC'),
+      limit: 10
+    });
+    res.json(equipments)
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
 exports.getSavedEquipment = async (req, res) => {
   try {
     const savedEquipmentList = await SavedEquipment.findOne({

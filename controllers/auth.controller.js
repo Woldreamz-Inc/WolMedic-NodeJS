@@ -111,6 +111,8 @@ exports.login = async (req, res) => {
         firstname: user.firstname,
         lastname: user.lastname,
         email: user.email,
+        phone: user.phone,
+        dob: user.dob
       },
       accessToken,
       refreshToken,
@@ -227,7 +229,6 @@ exports.editProfile = async (req, res) => {
 
     user.firstname = firstname || user.firstname
     user.lastname = lastname || user.lastname
-    user.email = email || user.email
     user.phone = phone || user.phone
     user.dob = dob || user.dob
 
