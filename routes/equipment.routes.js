@@ -208,7 +208,7 @@ router.delete(
 
 /**
  * @swagger
- * /equipment/saved:
+ * /equipment/view/saved:
  *   get:
  *     summary: Saved equipments
  *     description: Equipments saved by user, authentication required.
