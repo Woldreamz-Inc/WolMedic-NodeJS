@@ -73,6 +73,25 @@ router.post(
  *     summary: Get All Equipment
  *     description: Retrieve a list of all equipment. No authentication required.
  *     tags: [Equipment]
+ *     parameters:
+ *       - name: name
+ *         in: path
+ *         required: false
+ *         schema:
+ *           type: string
+ *         description: name of the equipment to retrieve.
+ *       - name: category
+ *         in: path
+ *         required: false
+ *         schema:
+ *           type: string
+ *         description: category of the equipment to retrieve.
+ *       - name: searchTerm
+ *         in: path
+ *         required: false
+ *         schema:
+ *           type: string
+ *         description: name or category of the equipment to retrieve.
  *     responses:
  *       '200':
  *         description: A list of equipment.
@@ -238,44 +257,6 @@ router.post(
   equipmentController.createSavedEquipment
 );
 
-
-/**
- * @swagger
- * /equipment/filter:
- *   get:
- *     summary: Filter equipments
- *     description: Filter equipments by name and category, no authentication required.
- *     tags: [Equipment]
- *     parameters:
- *       - name: name
- *         in: path
- *         required: false
- *         schema:
- *           type: string
- *         description: name of the equipment to retrieve.
- *       - name: category
- *         in: path
- *         required: false
- *         schema:
- *           type: string
- *         description: category of the equipment to retrieve.
- *     responses:
- *       '200':
- *         description: Equipments retrieved successfully.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Equipment'
- *       '404':
- *         description: No Equipment matches this criteria.
- *       '500':
- *         description: Internal server error.
- */
-router.get(
-  "/filter",
-  equipmentController.filterEquipments
-);
-
 /**
  * @swagger
  * /equipment/popular:
@@ -300,36 +281,6 @@ router.get(
   equipmentController.getPopularEquipments
 );
 
-/**
- * @swagger
- * /equipment/search:
- *   get:
- *     summary: Search equipments
- *     description: Search equipments based on name and category, no authentication required.
- *     tags: [Equipment]
- *     parameters:
- *       - name: searchTerm
- *         in: path
- *         required: false
- *         schema:
- *           type: string
- *         description: name or category of the equipment to retrieve.
- *     responses:
- *       '200':
- *         description: Equipments retrieved successfully.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Equipment'
- *       '404':
- *         description: No Equipment matches this criteria.
- *       '500':
- *         description: Internal server error.
- */
-router.get(
-  "/search",
-  equipmentController.searchEquipments
-);
 
 /**
  * @swagger

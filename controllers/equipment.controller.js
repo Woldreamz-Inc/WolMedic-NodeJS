@@ -34,9 +34,28 @@ exports.createEquipment = async (req, res) => {
 
 // Get all Equipment
 exports.getAllEquipment = async (req, res) => {
+  const { name, category, searchTerm } = req.query;
   try {
+    const filters = {}
+
+    if(name){
+      filters.name = { [Op.iLike]: `%${name}%`};
+    }
+
+    if (category) {
+      filters.category = { [Op.eq]: category };
+    }
+
+    if (searchTerm) {
+      filters[Op.or] = [
+        { name: { [Op.iLike]: `%${searchTerm}%` } },  
+        { category: { [Op.iLike]: `%${searchTerm}%` } }
+      ];
+    }
+
     const equipmentList = await Equipment.findAll({
-      include: User, // Include user info if needed
+      where: filters,
+      include: User
     });
     res.json(equipmentList);
   } catch (err) {
@@ -171,50 +190,3 @@ exports.saveEquipment = async (req, res) => {
     res.status(500).json({error: err.message });
   }
 }
-
-exports.filterEquipments = async (req, res) => {
-    const { name, category } = req.query;
-    try {
-      const filters = {}
-
-      if(name){
-        filters.name = { [Op.iLike]: `%${name}%`};
-      }
-
-      if (category) {
-        filters.category = { [Op.eq]: category };
-      }
-
-      const equipmentList = await Equipment.findAll({
-        where: filters
-      });
-  
-      res.json(equipmentList);
-    } catch (err) {
-      res.status(500).json({error: err.message})
-    }
-}
-
-exports.searchEquipments = async (req, res) => {
-  const { searchTerm } = req.query;
-
-  try {
-    
-    const filters = {};
-
-    if (searchTerm) {
-      filters[Op.or] = [
-        { name: { [Op.iLike]: `%${searchTerm}%` } },  
-        { category: { [Op.iLike]: `%${searchTerm}%` } }
-      ];
-    }
-
-    const equipmentList = await Equipment.findAll({
-      where: filters
-    });
-
-    res.status(200).json(equipmentList);
-  } catch (error) {
-    res.status(500).json({error: err.message})
-  }
-};
